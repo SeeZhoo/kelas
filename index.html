@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Struktur Kelas — XI TKJ 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-top">
+      <div class="nav-brand">
+        <span class="nav-mark">TJ</span>
+        <div>
+          <span class="nav-title">XI TKJ 1</span>
+          <span class="nav-sub">SMK Telkom Malang</span>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <button class="btn btn-admin" id="adminBtn" type="button">Login Admin</button>
+        <button class="toggle" id="themeToggle" type="button" aria-label="Ganti tema terang/gelap" aria-pressed="false">
+          <span class="toggle-track">
+            <span class="toggle-thumb">
+              <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.4 1.4M17.6 17.6L19 19M5 19l1.4-1.4M17.6 6.4L19 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <div class="nav-links" role="navigation" aria-label="Navigasi bagian">
+      <a href="#struktur" class="nav-link">Struktur</a>
+      <a href="#piket" class="nav-link">Jadwal Piket</a>
+      <a href="#galeri" class="nav-link">Dokumentasi</a>
+      <a href="#tugas" class="nav-link">Tugas</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <p class="eyebrow">Tahun Ajaran 2025/2026</p>
+    <h1 class="hero-title">Kelas <span class="accent">XI TKJ 1</span></h1>
+    <p class="hero-sub">SMK Telkom Malang</p>
+    <div class="hero-cta">
+      <a href="#piket" class="btn btn-accent">Lihat Jadwal Piket</a>
+      <a href="#galeri" class="btn btn-outline">Lihat Dokumentasi</a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ============ STRUKTUR ORGANISASI ============ -->
+    <section class="section" id="struktur">
+      <h2 class="section-title">Struktur Organisasi</h2>
+
+      <div class="chart">
+
+        <article class="card card-lead">
+          <div class="avatar avatar-lg">
+            <img src="images/walikelas.png" alt="Foto Wali Kelas" class="foto"
+                 onerror="this.onerror=null; fotoFallback(this, 'WK');">
+          </div>
+          <p class="role">Wali Kelas</p>
+          <p class="name">Nama Wali Kelas</p>
+        </article>
+
+        <div class="link-v" aria-hidden="true"></div>
+
+        <div class="grid grid-2">
+          <article class="card">
+            <div class="avatar">
+              <img src="images/ketuakelas.png" alt="Foto Ketua Kelas" class="foto"
+                   onerror="this.onerror=null; fotoFallback(this, 'KK');">
+            </div>
+            <p class="role">Ketua Kelas</p>
+            <p class="name">Nama Ketua Kelas</p>
+          </article>
+
+          <article class="card">
+            <div class="avatar">
+              <img src="images/wakilkelas.png" alt="Foto Wakil Ketua Kelas" class="foto"
+                   onerror="this.onerror=null; fotoFallback(this, 'WK');">
+            </div>
+            <p class="role">Wakil Ketua Kelas</p>
+            <p class="name">Nama Wakil Kelas</p>
+          </article>
+        </div>
+
+        <div class="grid grid-2">
+          <article class="card">
+            <div class="avatar">
+              <img src="images/sekretaris.png" alt="Foto Sekretaris" class="foto"
+                   onerror="this.onerror=null; fotoFallback(this, 'SK');">
+            </div>
+            <p class="role">Sekretaris</p>
+            <p class="name">Nama Sekretaris</p>
+          </article>
+
+          <article class="card">
+            <div class="avatar">
+              <img src="images/bendahara.png" alt="Foto Bendahara" class="foto"
+                   onerror="this.onerror=null; fotoFallback(this, 'BD');">
+            </div>
+            <p class="role">Bendahara</p>
+            <p class="name">Nama Bendahara</p>
+          </article>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============ JADWAL PIKET ============ -->
+    <section class="section" id="piket">
+      <h2 class="section-title">Jadwal Piket</h2>
+      <p class="section-note">34 siswa &middot; Senin–Kamis 7 anak, Jumat 6 anak</p>
+
+      <div class="piket-list">
+
+        <div class="piket-row">
+          <div class="piket-day"><span class="dot dot-1"></span>Senin</div>
+          <ul class="tags">
+            <li>Nama 1</li><li>Nama 2</li><li>Nama 3</li><li>Nama 4</li>
+            <li>Nama 5</li><li>Nama 6</li><li>Nama 7</li>
+          </ul>
+        </div>
+
+        <div class="piket-row">
+          <div class="piket-day"><span class="dot dot-2"></span>Selasa</div>
+          <ul class="tags">
+            <li>Nama 8</li><li>Nama 9</li><li>Nama 10</li><li>Nama 11</li>
+            <li>Nama 12</li><li>Nama 13</li><li>Nama 14</li>
+          </ul>
+        </div>
+
+        <div class="piket-row">
+          <div class="piket-day"><span class="dot dot-3"></span>Rabu</div>
+          <ul class="tags">
+            <li>Nama 15</li><li>Nama 16</li><li>Nama 17</li><li>Nama 18</li>
+            <li>Nama 19</li><li>Nama 20</li><li>Nama 21</li>
+          </ul>
+        </div>
+
+        <div class="piket-row">
+          <div class="piket-day"><span class="dot dot-4"></span>Kamis</div>
+          <ul class="tags">
+            <li>Nama 22</li><li>Nama 23</li><li>Nama 24</li><li>Nama 25</li>
+            <li>Nama 26</li><li>Nama 27</li><li>Nama 28</li>
+          </ul>
+        </div>
+
+        <div class="piket-row">
+          <div class="piket-day"><span class="dot dot-5"></span>Jumat</div>
+          <ul class="tags">
+            <li>Nama 29</li><li>Nama 30</li><li>Nama 31</li>
+            <li>Nama 32</li><li>Nama 33</li><li>Nama 34</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============ GALERI / DOKUMENTASI ============ -->
+    <section class="section" id="galeri">
+      <h2 class="section-title">Dokumentasi Kegiatan</h2>
+
+      <div class="gallery">
+        <div class="gallery-item">
+          <img src="images/kegiatan1.png" alt="Foto kegiatan kelas 1" class="foto"
+               onerror="this.onerror=null; fotoFallback(this, 'Foto 1');">
+        </div>
+        <div class="gallery-item">
+          <img src="images/kegiatan2.png" alt="Foto kegiatan kelas 2" class="foto"
+               onerror="this.onerror=null; fotoFallback(this, 'Foto 2');">
+        </div>
+        <div class="gallery-item">
+          <img src="images/kegiatan3.png" alt="Foto kegiatan kelas 3" class="foto"
+               onerror="this.onerror=null; fotoFallback(this, 'Foto 3');">
+        </div>
+        <div class="gallery-item">
+          <img src="images/kegiatan4.png" alt="Foto kegiatan kelas 4" class="foto"
+               onerror="this.onerror=null; fotoFallback(this, 'Foto 4');">
+        </div>
+        <div class="gallery-item">
+          <img src="images/kegiatan5.png" alt="Foto kegiatan kelas 5" class="foto"
+               onerror="this.onerror=null; fotoFallback(this, 'Foto 5');">
+        </div>
+        <div class="gallery-item">
+          <img src="images/kegiatan6.png" alt="Foto kegiatan kelas 6" class="foto"
+               onerror="this.onerror=null; fotoFallback(this, 'Foto 6');">
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TUGAS ============ -->
+    <section class="section" id="tugas">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">Tugas</h2>
+          <p class="section-note">Daftar tugas yang diberikan guru. Semua siswa bisa melihat tanpa login.</p>
+        </div>
+        <span class="badge-mode" id="modeBadge" hidden>Mode Admin</span>
+      </div>
+
+      <!-- form ini hanya tampil setelah admin login -->
+      <form class="tugas-form" id="tugasForm" hidden>
+        <div class="form-row">
+          <div class="field">
+            <label for="fMapel">Mata Pelajaran</label>
+            <input type="text" id="fMapel" placeholder="cth. Administrasi Infrastruktur Jaringan" required>
+          </div>
+          <div class="field">
+            <label for="fDeadline">Batas Waktu</label>
+            <input type="date" id="fDeadline" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="fJudul">Judul Tugas</label>
+          <input type="text" id="fJudul" placeholder="cth. Konfigurasi VLAN Trunking" required>
+        </div>
+        <div class="field">
+          <label for="fDeskripsi">Deskripsi</label>
+          <textarea id="fDeskripsi" rows="3" placeholder="Detail tugas dari guru..." required></textarea>
+        </div>
+        <div class="field">
+          <label for="fLink">Link Lampiran (opsional)</label>
+          <input type="url" id="fLink" placeholder="https://... (soal, materi, atau form pengumpulan)">
+        </div>
+        <div class="field">
+          <label for="fAttachment">Lampiran PDF/Gambar (opsional)</label>
+          <input type="file" id="fAttachment" accept="application/pdf,image/*">
+          <small class="field-hint">Format yang didukung: PDF, JPG, PNG, WebP</small>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-accent">Tambah Tugas</button>
+          <button type="button" class="btn btn-outline" id="cancelEdit" hidden>Batal Edit</button>
+        </div>
+      </form>
+
+      <div class="tugas-list" id="tugasList">
+        <!-- kartu tugas dirender oleh script.js -->
+      </div>
+
+      <p class="tugas-empty" id="tugasEmpty" hidden>Belum ada tugas.</p>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>Kelas XI TKJ 1 &middot; SMK Telkom Malang</p>
+  </footer>
+
+  <!-- ============ MODAL LOGIN ADMIN ============ -->
+  <div class="modal-overlay" id="loginOverlay" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+      <div class="modal-head">
+        <h3 id="loginTitle">Login Admin</h3>
+        <button class="modal-close" id="closeModal" type="button" aria-label="Tutup">&times;</button>
+      </div>
+      <form id="loginForm">
+        <div class="field">
+          <label for="lUser">Username</label>
+          <input type="text" id="lUser" autocomplete="username" required>
+        </div>
+        <div class="field">
+          <label for="lPass">Password</label>
+          <input type="password" id="lPass" autocomplete="current-password" required>
+        </div>
+        <p class="modal-error" id="loginError" hidden>Username atau password salah.</p>
+        <button type="submit" class="btn btn-accent btn-full">Masuk</button>
+        <p class="modal-hint">Demo: admin / tkj12025 — ganti kredensial ini sebelum dipakai sungguhan.</p>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay attachment-overlay" id="attachmentOverlay" hidden>
+    <div class="attachment-modal" role="dialog" aria-modal="true" aria-labelledby="attachmentTitle">
+      <div class="attachment-head">
+        <h3 id="attachmentTitle">Lampiran Tugas</h3>
+        <button class="modal-close" id="closeAttachment" type="button" aria-label="Tutup">&times;</button>
+      </div>
+      <div class="attachment-body" id="attachmentBody"></div>
+      <div class="attachment-actions">
+        <a class="btn btn-outline" id="downloadAttachment" href="#" download>Unduh File</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

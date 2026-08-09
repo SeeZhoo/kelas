@@ -1,0 +1,21 @@
+Taruh foto-foto di folder "images" ini dengan nama PERSIS seperti di bawah
+(boleh .png, .jpg, atau .jpeg — cukup ganti bagian ekstensinya di index.html
+kalau kamu pakai .jpg).
+
+Setelah foto dengan nama yang sesuai ditaruh di sini, hapus file teks ini.
+
+  walikelas.png     -> foto Wali Kelas
+  ketuakelas.png    -> foto Ketua Kelas
+  wakilkelas.png    -> foto Wakil Ketua Kelas
+  sekretaris.png    -> foto Sekretaris
+  bendahara.png     -> foto Bendahara
+
+  kegiatan1.png      \
+  kegiatan2.png       \
+  kegiatan3.png        > foto galeri kegiatan kelas (isi sesuka kamu,
+  kegiatan4.png       /   bisa lebih dari 6, tinggal tambah <div> baru
+  kegiatan5.png      /    di bagian "GALERI KEGIATAN" pada index.html)
+  kegiatan6.png     /
+
+Kalau foto belum ada / nama file salah, halaman tetap tampil rapi —
+otomatis muncul kotak inisial sebagai pengganti sementara.
