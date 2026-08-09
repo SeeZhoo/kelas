@@ -9,8 +9,7 @@
 Selamat datang di repository resmi kelas **XI TKJ 1** (Eleven Network One) SMK Telkom Malang. Repository ini digunakan sebagai pusat informasi organisasi kelas, dokumen kegiatan, tata tertib, serta direktori tugas kelompok.
 
 * **Program Keahlian:** Teknik Komputer dan Jaringan (TKJ)
-* **Wali Kelas:** [Nama Wali Kelas, S.Kom.]
-* **Slogan:** *"Connect the World, Master the Network"*
+
 
 ---
 
@@ -18,11 +17,11 @@ Selamat datang di repository resmi kelas **XI TKJ 1** (Eleven Network One) SMK T
 
 ```mermaid
 graph TD
-    A[Wali Kelas] --> B[Ketua Kelas]
-    B --> C[Wakil Ketua Kelas]
-    C --> D[Sekretaris 1 & 2]
-    C --> E[Bendahara 1 & 2]
-    C --> F[Divisi & Seksi]
+    A[Bapak okinay] --> B[Jhon]
+    B --> C[-]
+    C --> D[-]
+    C --> E[-]
+    C --> F[-]
 
 ```
 
@@ -68,10 +67,11 @@ graph TD
 
 ```text
 .
-├── 📂 docs/               # Dokumentasi kegiatan & struktur organisasi
-├── 📂 schedules/          # Jadwal pelajaran & piket harian
-├── 📂 assignments/        # Tugas kelompok & materi bersama
-└── README.md              # Profil utama kelas XI TKJ 1
+├── 📄 index.html          # Structure Website
+├── 🌈 style.css           # Untuk Memperbagus visual
+├── 🏗️ script.js           # Untuk tombol yang interaktif
+├── 📂 images/             # Directory Tersimpan nya foto
+└──    README.md            # Profil utama kelas XI TKJ 1
 
 ```
 
