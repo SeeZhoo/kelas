@@ -1,0 +1,196 @@
+RECAP LANGKAH PRAKTIKUM UUK 2026 - CLOUD & COMPUTER NETWORKING
+==============================================================
+Penerapan Infrastruktur Cloud: AWS VPC, EC2, RDS, S3, dan Web PHP-MySQL
+
+Arsitektur akhir:
+User -> EC2 (Web Server PHP) -> RDS MySQL (data teks) + S3 (file foto)
+
+
+1. VPC DAN JARINGAN
+-------------------
+- Buat VPC: UUK-2026-NamaKamu, CIDR 172.16.X.0/24 (X = nomor absen)
+- Buat 4 subnet:
+    Public1   AZ A   172.16.X.0/27
+    Private1  AZ A   172.16.X.64/27
+    Public2   AZ B   172.16.X.128/27
+    Private2  AZ B   172.16.X.192/27
+- Buat Internet Gateway: IG_NamaKamu, lalu attach ke VPC
+- Buat Route Table:
+    RT_Public_NamaKamu  : Local + route 0.0.0.0/0 ke IGW
+    RT_Private_NamaKamu : Local saja
+- Asosiasi subnet:
+    Public1 dan Public2   -> RT_Public_NamaKamu
+    Private1 dan Private2 -> RT_Private_NamaKamu
+
+
+2. EC2 WEB SERVER
+-----------------
+- Buat instance: webserver_namakamu
+- Subnet: Public1 (AZ A), OS: Amazon Linux
+- Keypair baru: namakamu.pem
+- Security group: webserver_sg (buka port 22 SSH dan 80 HTTP)
+- Koneksi SSH:
+    ssh -i keypair.pem ec2-user@<public-ip-ec2>
+
+
+3. INSTALL SOFTWARE
+-------------------
+sudo dnf install httpd -y
+sudo systemctl enable --now httpd
+sudo dnf install php php-mysqli -y
+php -v
+sudo dnf install git -y
+git --version
+sudo dnf install mariadb105 -y
+sudo systemctl restart httpd
+sudo systemctl status httpd      (harus active (running))
+
+
+4. DEPLOY APLIKASI DARI GITHUB
+------------------------------
+cd /var/www/html
+sudo git clone <link-github-kamu>
+
+
+5. BUAT RDS
+-----------
+a. Security group RDS:
+   - Nama: rds-sg, pilih VPC yang dibuat
+   - Inbound: MySQL/Aurora, TCP, port 3306
+   - Source: security group webserver_sg
+   - JANGAN pakai 0.0.0.0/0
+
+b. Create database:
+   - Full configuration, engine MySQL, template Dev/test
+   - Multi-AZ DB instance (2 instances)
+   - DB identifier bebas, master username admin, self managed, isi password
+   - Instance class: Burstable (t classes)
+   - Storage General Purpose, 20 GiB, storage autoscaling OFF
+   - Compute resource: Don't connect
+   - VPC yang dibuat, Public access: NO, VPC security group: rds-sg
+   - Monitoring: no
+   - Additional config: Initial DB name (contoh PEMINJAMAN_RUANG)
+   - Backup, enkripsi, maintenance: un-centang
+   - Create database, tunggu status Available
+
+
+6. BUAT TABEL DI RDS
+--------------------
+mysql -h ENDPOINT_RDS -u admin -p
+
+show databases;
+USE PEMINJAMAN_RUANG;
+CREATE TABLE PEMINJAMAN (
+  id_peminjaman INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nama_peminjam VARCHAR(150) NOT NULL,
+  kelas VARCHAR(50) DEFAULT NULL,
+  ruangan_dipinjam VARCHAR(100) NOT NULL,
+  tanggal_pinjam DATE NOT NULL,
+  tanggal_kembali DATE DEFAULT NULL,
+  keterangan TEXT DEFAULT NULL,
+  foto_peminjaman VARCHAR(255) DEFAULT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+7. HUBUNGKAN S3
+---------------
+a. Buat bucket:
+   - S3 -> Create bucket, nama unik huruf kecil
+   - Region: us-east-1
+   - Object Ownership: ACLs enabled
+   - Block all public access: OFF (centang acknowledge)
+
+b. Bucket policy (Permissions -> Bucket policy):
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Sid": "PublicRead",
+         "Effect": "Allow",
+         "Principal": "*",
+         "Action": "s3:GetObject",
+         "Resource": "arn:aws:s3:::NAMA_BUCKET_KAMU/*"
+       }
+     ]
+   }
+
+c. IAM Role untuk EC2:
+   - EC2 -> pilih instance -> Actions -> Security -> Modify IAM role
+   - Pilih LabRole / LabInstanceProfile -> Update IAM role
+   - Tunggu 30-60 detik
+   - Cek di terminal EC2:
+       TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" \
+       -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+
+       curl -H "X-aws-ec2-metadata-token: $TOKEN" \
+       http://169.254.169.254/latest/meta-data/iam/security-credentials/
+     Hasil benar: LabRole
+     Kalau tidak muncul: stop instance, start lagi, ulangi cek.
+
+d. Install AWS SDK for PHP:
+   cd /var/www/html/Peminjaman-Ruang-Foto-Disimpan-di-S3-Bucket
+   curl -sS https://getcomposer.org/installer | sudo php
+   sudo php composer.phar require aws/aws-sdk-php
+   (berhasil jika ada folder vendor/, composer.json, composer.lock)
+
+
+8. SESUAIKAN KODE
+-----------------
+a. config.php (sudo nano config.php):
+
+   <?php
+   require 'vendor/autoload.php';
+   use Aws\S3\S3Client;
+
+   $host = 'ENDPOINT_RDS_KAMU';
+   $user = 'admin';
+   $pass = 'PASSWORD_RDS_KAMU';
+   $db   = 'PEMINJAMAN_RUANG';       (sama dengan Initial DB name RDS)
+
+   $s3 = new S3Client([
+       'version' => 'latest',
+       'region'  => 'us-east-1'
+   ]);
+
+   $bucket = "NAMA_BUCKET_KAMU";
+   $s3_folder = "uploads/";
+
+b. index.php dan edit.php: ganti URL gambar sesuai bucket kamu
+   index.php:
+   <img src="https://NAMA_BUCKET_KAMU.s3.us-east-1.amazonaws.com/uploads/<?= $row['foto_peminjaman'] ?>" width="80">
+
+   edit.php:
+   <img src="https://NAMA_BUCKET_KAMU.s3.us-east-1.amazonaws.com/uploads/<?= $data['foto_peminjaman'] ?>" width="120">
+
+   Atau otomatis dengan sed:
+   sudo sed -i 's#https://[^/]*\.amazonaws\.com/uploads#https://NAMA_BUCKET_KAMU.s3.us-east-1.amazonaws.com/uploads#g' index.php edit.php
+   grep -n "amazonaws" index.php edit.php
+
+
+9. UJI COBA
+-----------
+sudo systemctl restart httpd
+
+- Buka: http://<public-ip-ec2>/Peminjaman-Ruang-Foto-Disimpan-di-S3-Bucket/
+- Tambah data peminjaman, upload foto, klik simpan
+- Cek foto muncul di tabel (index.php)
+- Cek S3 -> bucket -> folder uploads/ (otomatis terbentuk saat upload pertama)
+
+
+TROUBLESHOOTING CEPAT
+---------------------
+- Halaman error / koneksi gagal : cek endpoint, user, password, nama database
+  di config.php, dan security group rds-sg (port 3306 dari webserver_sg).
+  Lihat log: sudo tail -n 20 /var/log/httpd/error_log
+- Upload gagal                  : cek IAM Role (LabRole), nama bucket, dan
+  baris require + use di config.php.
+- Gambar rusak / tidak muncul   : cek foto ada di S3 uploads/, URL di
+  index.php/edit.php, bucket policy, dan Block public access OFF.
+- Access Denied di URL gambar   : Block public access masih aktif atau
+  bucket policy belum disimpan.
+- Class S3Client not found      : require vendor/autoload.php dan
+  use Aws\S3\S3Client; belum ada di config.php.
+
+CATATAN: nama bucket dan nama folder (uploads/) harus sama di config.php,
+index.php, edit.php, dan bucket policy.
